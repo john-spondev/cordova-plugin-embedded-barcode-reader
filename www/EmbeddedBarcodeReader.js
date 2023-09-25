@@ -25,8 +25,9 @@ EmbeddedBarcodeReader.startCamera = function(options, onSuccess, onError) {
     if (typeof(options.alpha) === 'undefined') {
         options.alpha = 1;
     }
+    options.statusText = options.statusText ? options.statusText : 'Scan Here';
 
-    exec(onSuccess, onError, PLUGIN_NAME, "startReading", [options.x, options.y, options.width, options.height, options.camera, options.tapPhoto, options.previewDrag, options.toBack, options.alpha]);
+    exec(onSuccess, onError, PLUGIN_NAME, "startReading", [options.x, options.y, options.width, options.height, options.camera, options.tapPhoto, options.previewDrag, options.toBack, options.alpha, options.statusText]);
 };
 
 EmbeddedBarcodeReader.addBarcodeReadListener = function(onSuccess, onError) {

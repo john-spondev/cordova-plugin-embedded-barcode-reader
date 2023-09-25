@@ -43,6 +43,14 @@ public class EmbedQRReader extends Fragment {
 	private int numberOfCameras = 0;
 
 	private View view;
+	private String statusText;
+
+	public void setStatusText(String statusText) {
+        this.statusText = statusText;
+        if (this.barcodeView != null) {
+            this.barcodeView.setStatusText(this.statusText);
+        }
+    }
 
 	private BarcodeCallback callback = new BarcodeCallback() {
 		@Override
@@ -57,7 +65,7 @@ public class EmbedQRReader extends Fragment {
 
 			lastReadTime = newReadTime;
 			lastText = result.getText();
-			barcodeView.setStatusText(result.getText());
+			// barcodeView.setStatusText(result.getText()); // No need to display the scanned result in the QR cam view
 			beepManager.playBeepSoundAndVibrate();
 
 			eventListener.onBarcodeRead(lastText);
@@ -96,6 +104,11 @@ public class EmbedQRReader extends Fragment {
 		//set camera
 		CameraSettings settings = barcodeView.getBarcodeView().getCameraSettings();
 		settings.setRequestedCameraId(this.getDefaultCameraId());
+
+		// Check if statusText is not null and set it on barcodeView
+        if (statusText != null) {
+            barcodeView.setStatusText(this.statusText);
+        }
 
 		//start scanning
 		barcodeView.decodeContinuous(callback);
